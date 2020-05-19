@@ -45,6 +45,9 @@ module "private_subnet_app" {
   businessunit = "techteam"
   organization = "github"
 
+  nat_gateway_ids = ["nat-xxx","nat-yyy"]
+  nat_gateway_required = "true"
+
   private_subnets = ["192.168.101.0/25", "192.168.101.128/25"]
 }
 ```
