@@ -40,7 +40,6 @@ resource "aws_route_table_association" "private" {
   route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
   count          = "${length(var.private_subnets)}"
 
-  depends_on = ["aws_route_table.private","aws_subnet.private"]
 }
 
 # Resource to create a routing table entry (a route) for natgateway
@@ -51,7 +50,6 @@ resource "aws_route" "nat_gateway" {
   nat_gateway_id         = "${element(var.nat_gateway_ids, count.index)}"
   count                  = "${var.nat_gateway_required == "true" ? length(var.private_subnets) : 0}"
 
-  depends_on             = ["aws_route_table.private"]
 }
 
 # Resource to create NACL
@@ -61,8 +59,6 @@ resource "aws_network_acl" "private" {
   subnet_ids = ["${aws_subnet.private.*.id}"]
   egress     = "${var.private_network_acl_egress}"
   ingress    = "${var.private_network_acl_ingress}"
-
-  depends_on = ["aws_subnet.private"]
 
   tags {
     Name         = "${format("%s-acl-%s", var.environment, var.name)}"
