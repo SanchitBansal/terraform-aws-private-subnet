@@ -36,8 +36,8 @@ resource "aws_route_table" "private" {
 # Resource to assosiate route tables to subnets
 
 resource "aws_route_table_association" "private" {
-  subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
+  subnet_id      = "${aws_subnet.private.*.id[count.index]}"
+  route_table_id = "${aws_route_table.private.*.id[count.index]}"
   count          = "${length(var.private_subnets)}"
 
 }
@@ -45,7 +45,7 @@ resource "aws_route_table_association" "private" {
 # Resource to create a routing table entry (a route) for natgateway
 
 resource "aws_route" "nat_gateway" {
-  route_table_id         = "${element(aws_route_table.private.*.id, count.index)}"
+  route_table_id         = "${aws_route_table.private.*.id[count.index]}"
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${element(var.nat_gateway_ids, count.index)}"
   count                  = "${var.nat_gateway_required == "true" ? length(var.private_subnets) : 0}"
