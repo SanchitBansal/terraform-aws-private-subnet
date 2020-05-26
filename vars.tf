@@ -19,12 +19,10 @@ variable "environment" {
   description = "the name of your environment"
 }
 
-variable "businessunit" {
-  description = "the name of your business unit to create"
-}
-
-variable "organization" {
-  description = "the name of your organization to be used as tag"
+variable "custom_tags" {
+  type        = "map"
+  default     = {}
+  description = "map of tags to be added"
 }
 
 variable "private_subnets" {

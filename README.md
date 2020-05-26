@@ -12,8 +12,11 @@ module "private_subnet_db" {
   name = "db"
   environment = "test"
   availability_zones  = ["ap-south-1a", "ap-south-1b"]
-  businessunit = "techteam"
-  organization = "github"
+
+  custom_tags = {
+    "organization" = "github"
+    "businessunit" = "techteam"
+  }
 
   private_subnets = ["192.168.100.0/25", "192.168.100.128/25"]
 
@@ -62,26 +65,32 @@ The module creates subnet CIDRs provided in private_subnets var and names them i
 ```hcl
 module "private_subnet_db" {
   source = "github.com/SanchitBansal/terraform-private-subnet.git"
-  
+
   vpc_id = "vpc-xxxxx"
   name = "db"
   environment = "test"
   availability_zones  = ["ap-south-1a", "ap-south-1b"]
-  businessunit = "techteam"
-  organization = "github"
+
+  custom_tags = {
+    "organization" = "github"
+    "businessunit" = "techteam"
+  }
 
   private_subnets = ["192.168.100.0/25", "192.168.100.128/25"]
 }
 
 module "private_subnet_app" {
   source = "github.com/SanchitBansal/terraform-private-subnet.git"
-  
+
   vpc_id = "vpc-xxxxx"
   name = "app"
   environment = "test"
   availability_zones  = ["ap-south-1a", "ap-south-1b"]
-  businessunit = "techteam"
-  organization = "github"
+
+  custom_tags = {
+    "organization" = "github"
+    "businessunit" = "techteam"
+  }
 
   nat_gateway_ids = ["nat-xxx","nat-yyy"]
   nat_gateway_required = "true"
@@ -95,15 +104,18 @@ Also you can increase/ decrease availability zones as the requirement comes in f
 ```hcl
 module "private_subnet_db" {
   source = "github.com/SanchitBansal/terraform-private-subnet.git"
-  
+
   vpc_id = "vpc-xxxxx"
   name = "db"
   environment = "test"
   availability_zones  = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
-  businessunit = "techteam"
-  organization = "github"
 
-  private_subnets = ["192.168.100.0/25", "192.168.100.128/25", "192.168.102.0/25"]	
+  custom_tags = {
+    "organization" = "github"
+    "businessunit" = "techteam"
+  }
+
+  private_subnets = ["192.168.100.0/25", "192.168.100.128/25", "192.168.102.0/25"]
 }
 ```
 
